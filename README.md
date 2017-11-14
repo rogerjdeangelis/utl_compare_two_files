@@ -1,7 +1,12 @@
 # utl_compare_two_files
 Five solutions using 5 "languages" or "system commands".     This type of question is best solved using Perl->Python->R- Unix OS/Widows OS?     Quickest way to get a True/Fasle result appears to be Python       1. Use Python for a Truse False      2. Use R for an interactive two panel display of differences      3. Use Perl for the best text base analysis?      4. Use Windows operating sysyem command  'fc'      5. Use Unix 'diff' command
 
-    ```  SAS-l:  Quickly checking if two test fiies are identical?                                                                                                    ```
+    ```  Quickly checking if two fiies are identical?                                                                                                                 ```
+    ```                                                                                                                                                               ```
+    ```     Note most of these methods handle binary files and very long records.                                                                                     ```
+    ```                                                                                                                                                               ```
+    ```     see  github                                                                                                                                               ```
+    ```     https://github.com/rogerjdeangelis/utl_compare_two_files                                                                                                  ```
     ```                                                                                                                                                               ```
     ```     This type of question is best solved using Perl->Python->R- Unix OS/Widows OS?                                                                            ```
     ```                                                                                                                                                               ```
@@ -111,7 +116,7 @@ Five solutions using 5 "languages" or "system commands".     This type of questi
     ```        library(plotly);                                                                                                                                       ```
     ```        res<-diffr("d:/txt/file1.txt", "d:/txt/file2.txt", before = "f1", after = "f2");                                                                       ```
     ```        str(res);                                                                                                                                              ```
-    ```        htmlwidgets::saveWidget(res, "d:/htm/index.html")                                                                                                      ```
+    ```        htmlwidgets::saveWidget(res, "d:/htm/index.png")                                                                                                       ```
     ```        ');                                                                                                                                                    ```
     ```                                                                                                                                                               ```
     ```        OUTPUT                                                                                                                                                 ```
@@ -139,6 +144,10 @@ Five solutions using 5 "languages" or "system commands".     This type of questi
     ```                                                                                                                                                               ```
     ```       Win 7 64bit                                                                                                                                             ```
     ```       ===========                                                                                                                                             ```
+    ```                                                                                                                                                               ```
+    ```         x 'start cmd /c "fc d:\txt\file1.txt d:\txt\file2.txt > d:\txt\fileCmp.txt"';                                                                         ```
+    ```                                                                                                                                                               ```
+    ```         OUTPUT                                                                                                                                                ```
     ```                                                                                                                                                               ```
     ```         Comparing files D:\TXT\file1.txt and D:\TXT\FILE2.TXT                                                                                                 ```
     ```         ***** D:\TXT\file1.txt                                                                                                                                ```
@@ -170,39 +179,46 @@ Five solutions using 5 "languages" or "system commands".     This type of questi
     ```         x "/usr/bin/rm -f /home/txt/filecmp.txt;                                                                                                              ```
     ```         x "diff -s /home/txt/file1.txt /home/txt/file2.txt > /home/txt/filecmp.txt";                                                                          ```
     ```                                                                                                                                                               ```
-    ```         donth have a copy of output                                                                                                                           ```
+    ```         don't have a copy of output                                                                                                                           ```
     ```                                                                                                                                                               ```
+    ```  *                _               _       _                                                                                                                   ```
+    ```   _ __ ___   __ _| | _____     __| | __ _| |_ __ _                                                                                                            ```
+    ```  | '_ ` _ \ / _` | |/ / _ \   / _` |/ _` | __/ _` |                                                                                                           ```
+    ```  | | | | | | (_| |   <  __/  | (_| | (_| | || (_| |                                                                                                           ```
+    ```  |_| |_| |_|\__,_|_|\_\___|   \__,_|\__,_|\__\__,_|                                                                                                           ```
     ```                                                                                                                                                               ```
-    ```  %macro utl_submit_pl64(pgm)/des="bactic separated set of py commands";                                                                                       ```
-    ```    * write the program to a temporary file;                                                                                                                   ```
-    ```    filename pl_pgm "%sysfunc(pathname(work))/pl_pgm.pl" lrecl=32766 recfm=v;                                                                                  ```
-    ```    data _null_;                                                                                                                                               ```
-    ```      length pgm  $32755 cmd $255;                                                                                                                             ```
-    ```      file pl_pgm ;                                                                                                                                            ```
-    ```      pgm=&pgm;                                                                                                                                                ```
-    ```      semi=countc(pgm,'`');                                                                                                                                    ```
-    ```        do idx=1 to semi;                                                                                                                                      ```
-    ```          cmd=cats(scan(pgm,idx,'`'));                                                                                                                         ```
-    ```          put cmd $char96.;                                                                                                                                    ```
-    ```          putlog cmd $char96.;                                                                                                                                 ```
-    ```        end;                                                                                                                                                   ```
-    ```    run;                                                                                                                                                       ```
-    ```    run;quit;                                                                                                                                                  ```
-    ```    %let _loc=%sysfunc(pathname(pl_pgm));                                                                                                                      ```
-    ```    %put &_loc;                                                                                                                                                ```
-    ```    filename rut pipe "D:\Dwimperl\perl\bin\perl &_loc > d:/log/__log.txt";                                                                                    ```
-    ```    data _null_;                                                                                                                                               ```
-    ```      file print;                                                                                                                                              ```
-    ```      infile rut;                                                                                                                                              ```
-    ```      input;                                                                                                                                                   ```
-    ```      put _infile_;                                                                                                                                            ```
-    ```    run;quit;                                                                                                                                                  ```
-    ```    filename rut clear;                                                                                                                                        ```
-    ```    filename pl_pgm clear;                                                                                                                                     ```
-    ```    data _null_;                                                                                                                                               ```
-    ```      infile "d:/log/__log.txt";                                                                                                                               ```
-    ```      input;                                                                                                                                                   ```
-    ```      put _infile_;                                                                                                                                            ```
-    ```    run;quit;                                                                                                                                                  ```
-    ```  %mend utl_submit_pl64;                                                                                                                                       ```
+    ```  ;                                                                                                                                                            ```
+    ```                                                                                                                                                               ```
+    ```  data _null_;                                                                                                                                                 ```
+    ```   file "d:/txt/file1.txt";                                                                                                                                    ```
+    ```   input;                                                                                                                                                      ```
+    ```   put _infile_;                                                                                                                                               ```
+    ```   *putlog _n_= _infile_;                                                                                                                                      ```
+    ```   file "d:/txt/file2.txt";                                                                                                                                    ```
+    ```   if mod(_n_,5)=0  then do;                                                                                                                                   ```
+    ```      _infile_=compress(_infile_,'V');                                                                                                                         ```
+    ```   end;                                                                                                                                                        ```
+    ```   if mod(_n_,12)=0 then delete;                                                                                                                               ```
+    ```   put _infile_;                                                                                                                                               ```
+    ```   putlog _n_=  _infile_;                                                                                                                                      ```
+    ```  cards4;                                                                                                                                                      ```
+    ```  libname xel "d:/xls/cats.xlsx";                                                                                                                              ```
+    ```  data _null_;                                                                                                                                                 ```
+    ```      dcl hash  a  (ordered: "a");                                                                                                                             ```
+    ```      a.definekey('key');                                                                                                                                      ```
+    ```      a.definedata("ID", "Visit", "Model", "Type", "Speed", "Viscocity", "Date");                                                                              ```
+    ```      a.definedone();                                                                                                                                          ```
+    ```    do until (last.id);                                                                                                                                        ```
+    ```      set have;                                                                                                                                                ```
+    ```      by id;                                                                                                                                                   ```
+    ```      key+1;                                                                                                                                                   ```
+    ```      a.add();                                                                                                                                                 ```
+    ```    end;                                                                                                                                                       ```
+    ```    outdsn=cats('xel.',id);                                                                                                                                    ```
+    ```    a.output(dataset:outdsn);                                                                                                                                  ```
+    ```    a.delete();                                                                                                                                                ```
+    ```  run;quit;                                                                                                                                                    ```
+    ```  ;;;;                                                                                                                                                         ```
+    ```  run;quit;                                                                                                                                                    ```
+
 
