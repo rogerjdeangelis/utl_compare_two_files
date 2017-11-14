@@ -1,4 +1,9 @@
-SAS-l:  Quickly checking if two test fiies are identical?
+Quickly checking if two fiies are identical?
+
+   Note most of these methods handle binary files and very long records.
+
+   see  github
+   https://github.com/rogerjdeangelis/utl_compare_two_files
 
    This type of question is best solved using Perl->Python->R- Unix OS/Widows OS?
 
@@ -108,7 +113,7 @@ PROCESSES  AND OUTUT
       library(plotly);
       res<-diffr("d:/txt/file1.txt", "d:/txt/file2.txt", before = "f1", after = "f2");
       str(res);
-      htmlwidgets::saveWidget(res, "d:/htm/index.html")
+      htmlwidgets::saveWidget(res, "d:/htm/index.png")
       ');
 
       OUTPUT
@@ -136,6 +141,10 @@ PROCESSES  AND OUTUT
 
      Win 7 64bit
      ===========
+
+       x 'start cmd /c "fc d:\txt\file1.txt d:\txt\file2.txt > d:\txt\fileCmp.txt"';
+
+       OUTPUT
 
        Comparing files D:\TXT\file1.txt and D:\TXT\FILE2.TXT
        ***** D:\TXT\file1.txt
@@ -167,8 +176,57 @@ PROCESSES  AND OUTUT
        x "/usr/bin/rm -f /home/txt/filecmp.txt;
        x "diff -s /home/txt/file1.txt /home/txt/file2.txt > /home/txt/filecmp.txt";
 
-       donth have a copy of output
+       don't have a copy of output
 
+*                _               _       _
+ _ __ ___   __ _| | _____     __| | __ _| |_ __ _
+| '_ ` _ \ / _` | |/ / _ \   / _` |/ _` | __/ _` |
+| | | | | | (_| |   <  __/  | (_| | (_| | || (_| |
+|_| |_| |_|\__,_|_|\_\___|   \__,_|\__,_|\__\__,_|
+
+;
+
+data _null_;
+ file "d:/txt/file1.txt";
+ input;
+ put _infile_;
+ *putlog _n_= _infile_;
+ file "d:/txt/file2.txt";
+ if mod(_n_,5)=0  then do;
+    _infile_=compress(_infile_,'V');
+ end;
+ if mod(_n_,12)=0 then delete;
+ put _infile_;
+ putlog _n_=  _infile_;
+cards4;
+libname xel "d:/xls/cats.xlsx";
+data _null_;
+    dcl hash  a  (ordered: "a");
+    a.definekey('key');
+    a.definedata("ID", "Visit", "Model", "Type", "Speed", "Viscocity", "Date");
+    a.definedone();
+  do until (last.id);
+    set have;
+    by id;
+    key+1;
+    a.add();
+  end;
+  outdsn=cats('xel.',id);
+  a.output(dataset:outdsn);
+  a.delete();
+run;quit;
+;;;;
+run;quit;
+
+
+
+*
+ _ __ ___   __ _  ___ _ __ ___
+| '_ ` _ \ / _` |/ __| '__/ _ \
+| | | | | | (_| | (__| | | (_) |
+|_| |_| |_|\__,_|\___|_|  \___/
+
+;
 
 %macro utl_submit_pl64(pgm)/des="bactic separated set of py commands";
   * write the program to a temporary file;
@@ -202,4 +260,5 @@ PROCESSES  AND OUTUT
     put _infile_;
   run;quit;
 %mend utl_submit_pl64;
+
 
