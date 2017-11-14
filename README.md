@@ -1,0 +1,2 @@
+# utl_compare_two_files
+Five solutions using 5 "languages" or "system commands".     This type of question is best solved using Perl->Python->R- Unix OS/Widows OS?     Quickest way to get a True/Fasle result appears to be Python       1. Use Python for a Truse False      2. Use R for an interactive two panel display of differences      3. Use Perl for the best text base analysis?      4. Use Windows operating sysyem command  'fc'      5. Use Unix 'diff' command
